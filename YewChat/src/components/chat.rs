@@ -150,8 +150,14 @@ impl Component for Chat {
                     <div class="text-xl p-3">{"Users"}</div>
                     {
                         self.users.clone().iter().map(|u| {
+                            let userColor = if u.name.clone() == username.to_string() {
+                                "flex m-3 bg-gray-600 rounded-lg p-2"
+                            } else {
+                                "flex m-3 bg-white rounded-lg p-2"
+                            };
+                            
                             html!{
-                                <div class="flex m-3 bg-white rounded-lg p-2">
+                                <div class={userColor}>
                                     <div>
                                         <img class="w-12 h-12 rounded-full" src={u.avatar.clone()} alt="avatar"/>
                                     </div>
@@ -174,8 +180,14 @@ impl Component for Chat {
                         {
                             self.messages.iter().map(|m| {
                                 let user = self.users.iter().find(|u| u.name == m.from).unwrap();
+                                let chatColor = if user.name.clone() == username.to_string() {
+                                    "flex items-end w-3/6 bg-green-100 m-8 rounded-tl-lg rounded-tr-lg rounded-br-lg "
+                                } else {
+                                    "flex items-end w-3/6 bg-gray-100 m-8 rounded-tl-lg rounded-tr-lg rounded-br-lg "
+                                };
+
                                 html!{
-                                    <div class="flex items-end w-3/6 bg-gray-100 m-8 rounded-tl-lg rounded-tr-lg rounded-br-lg ">
+                                    <div class={chatColor}>
                                         <img class="w-8 h-8 rounded-full m-3" src={user.avatar.clone()} alt="avatar"/>
                                         <div class="p-3">
                                             <div class="text-sm">
